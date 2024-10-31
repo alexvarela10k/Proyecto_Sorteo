@@ -1,34 +1,62 @@
+// Importar Firebase e inicializar con la configuración del proyecto
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.8/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/9.6.8/firebase-firestore.js";
+
+
+// Configuración de Firebase (reemplaza con tus propios datos de Firebase)
+const firebaseConfig = {
+    apiKey: "AIzaSyA_5SFTbkNjWvqSaTqDY9PhwwNMXKmTe24",
+    authDomain: "proyecto-sorteos-360f5.firebaseapp.com",
+    projectId: "proyecto-sorteos-360f5",
+    storageBucket: "proyecto-sorteos-360f5.appspot.com",
+    messagingSenderId: "544953774453",
+    appId: "1:544953774453:web:7aafb0c3771bab3de7633c"
+    };
+
+// Inicializar Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+
+
 // Función para cargar sorteos activos en modo usuario o administrador
 function cargarSorteos(esAdmin = false) {
-    const sorteos = JSON.parse(localStorage.getItem("sorteos")) || [];
     const sorteosLista = document.querySelector(".sorteos-lista");
 
     if (sorteosLista) {
         sorteosLista.innerHTML = ""; // Limpia la lista actual
 
-        sorteos.forEach((sorteo) => {
-            if (!sorteo.finalizado && !sorteo.eliminado) {
-                const sorteoCard = document.createElement("div");
-                sorteoCard.className = "sorteo-card";
-                sorteoCard.innerHTML = `
-                    <img src="${sorteo.imagen || 'https://via.placeholder.com/150'}" alt="${sorteo.nombre}">
-                    <h3>${sorteo.nombre}</h3>
-                    <p>Ticket: $${sorteo.precio}</p>
-                    <p>${sorteo.descripcion}</p>
-                    ${esAdmin ? `
-                        <button onclick="editarSorteo(${sorteo.id})">Editar</button>
-                        <button onclick="eliminarSorteo(${sorteo.id})">Eliminar Sorteo</button>
-                        <button onclick="agregarParticipante(${sorteo.id})">Añadir Participante</button>
-                        <button onclick="seleccionarGanador(${sorteo.id})">Elegir Ganador</button>
-                    ` : `
-                        <a href="https://wa.me/+573172605863?text=Hola%20me%20interesa%20participar%20en%20el%20sorteo%20de%20${sorteo.nombre}" target="_blank" class="btn-whatsapp">Contáctanos en WhatsApp</a>
-                    `}
-                `;
-                sorteosLista.appendChild(sorteoCard);
-            }
-        });
+        // Obtiene los sorteos activos desde Firestore
+        db.collection("sorteos").where("finalizado", "==", false).where("eliminado", "==", false)
+            .get()
+            .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    const sorteo = doc.data();
+                    const sorteoCard = document.createElement("div");
+                    sorteoCard.className = "sorteo-card";
+                    sorteoCard.innerHTML = `
+                        <img src="${sorteo.imagen || 'https://via.placeholder.com/150'}" alt="${sorteo.nombre}">
+                        <h3>${sorteo.nombre}</h3>
+                        <p>Ticket: $${sorteo.precio}</p>
+                        <p>${sorteo.descripcion}</p>
+                        ${esAdmin ? `
+                            <button onclick="editarSorteo('${doc.id}')">Editar</button>
+                            <button onclick="eliminarSorteo('${doc.id}')">Eliminar Sorteo</button>
+                            <button onclick="agregarParticipante('${doc.id}')">Añadir Participante</button>
+                            <button onclick="seleccionarGanador('${doc.id}')">Elegir Ganador</button>
+                        ` : `
+                            <a href="https://wa.me/+573172605863?text=Hola%20me%20interesa%20participar%20en%20el%20sorteo%20de%20${sorteo.nombre}" target="_blank" class="btn-whatsapp">Contáctanos en WhatsApp</a>
+                        `}
+                    `;
+                    sorteosLista.appendChild(sorteoCard);
+                });
+            })
+            .catch((error) => {
+                console.error("Error al cargar sorteos: ", error);
+            });
     }
 }
+
 
 // Función para agregar un sorteo nuevo desde admin.html
 function agregarSorteo(event) {
@@ -42,18 +70,10 @@ function agregarSorteo(event) {
     let imagenURL = '';
     if (imagenInput.files.length > 0) {
         imagenURL = URL.createObjectURL(imagenInput.files[0]);
-        
-        // Limpia la URL `blob` después de usarla para evitar errores
-        imagenInput.addEventListener("change", () => {
-            if (imagenURL) {
-                URL.revokeObjectURL(imagenURL);
-            }
-        });
     }
 
     if (nombre && precio > 0) {
         const nuevoSorteo = {
-            id: Date.now(),
             nombre,
             precio,
             descripcion,
@@ -63,29 +83,43 @@ function agregarSorteo(event) {
             eliminado: false
         };
 
-        const sorteos = JSON.parse(localStorage.getItem("sorteos")) || [];
-        sorteos.push(nuevoSorteo);
-        localStorage.setItem("sorteos", JSON.stringify(sorteos));
-
-        alert("¡Sorteo agregado exitosamente!");
-        document.getElementById("form-sorteo").reset();
-        cargarSorteos(true); // Recargar sorteos en modo administrador
+        // Guarda el sorteo en Firestore
+        db.collection("sorteos").add(nuevoSorteo)
+            .then(() => {
+                alert("¡Sorteo agregado exitosamente!");
+                document.getElementById("form-sorteo").reset();
+                cargarSorteos(true); // Recargar sorteos en modo administrador
+            })
+            .catch((error) => {
+                console.error("Error al agregar sorteo: ", error);
+            });
     } else {
         alert("Por favor, completa todos los campos obligatorios.");
     }
 }
 
-// Función para eliminar un sorteo (marcarlo como eliminado)
+
+// Función para eliminar un sorteo (marcarlo como eliminado) y actualizar en Firebase
 function eliminarSorteo(id) {
-    const sorteos = JSON.parse(localStorage.getItem("sorteos")) || [];
-    const sorteo = sorteos.find(s => s.id === id);
-    
-    if (sorteo) {
-        sorteo.eliminado = true;
-        localStorage.setItem("sorteos", JSON.stringify(sorteos));
+    const sorteoRef = firebase.database().ref("sorteos/" + id);
+    sorteoRef.update({
+        eliminado: true
+    }).then(() => {
         alert("Sorteo eliminado exitosamente");
-        cargarSorteos(true);
-    }
+        cargarSorteos(true); // Actualiza la vista en el panel de administración
+    }).catch(error => console.error("Error eliminando el sorteo:", error));
+}
+
+// Función para finalizar un sorteo y actualizar en Firebase
+function finalizarSorteo(id, ganador) {
+    const sorteoRef = firebase.database().ref("sorteos/" + id);
+    sorteoRef.update({
+        finalizado: true,
+        ganador: ganador
+    }).then(() => {
+        alert(`Sorteo finalizado. El ganador es ${ganador.nombre}`);
+        cargarSorteos(true); // Actualiza la vista en el panel de administración
+    }).catch(error => console.error("Error finalizando el sorteo:", error));
 }
 
 // Función para cargar el historial de sorteos finalizados y eliminados en historial.html
