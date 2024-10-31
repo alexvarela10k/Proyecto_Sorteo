@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Panel de Administración - V RANDOM</title>
+</head>
+<body>
+    <script>
+        if (!localStorage.getItem("isAdmin")) {
+            window.location.href = "index.html";
+        }
+    </script>
+    
+    <!-- Header -->
+    <header>
+        <div class="logo">V RANDOM</div>
+        <nav class="navbar">
+            <a href="index.html">Inicio</a>
+            <a href="admin.html">Panel de Administración</a>
+            <a href="historial.html">Historial de Sorteos</a>
+            <button class="btn-logout" onclick="cerrarSesion()">Cerrar Sesión</button>
+        </nav>
+    </header>
+
+    <!-- Panel de Administración -->
+    <section id="admin-panel" class="panel">
+        <!-- Contenedor del formulario de agregar sorteo con margen superior -->
+        <div class="admin-form-container" style="margin-top: 20px;">
+            <h2>Agregar Nuevo Sorteo</h2>
+            <form id="form-sorteo">
+                <label for="nombre-sorteo">Nombre del Sorteo</label>
+                <input type="text" id="nombre-sorteo" required placeholder="Ej. Cesta de Licores">
+
+                <label for="precio-ticket">Precio del Ticket</label>
+                <input type="number" id="precio-ticket" min="1" required placeholder="Ej. 15000">
+
+                <label for="descripcion-sorteo">Descripción</label>
+                <textarea id="descripcion-sorteo" placeholder="Breve descripción del premio"></textarea>
+
+                <label for="imagen-sorteo">Imagen del Sorteo</label>
+                <input type="file" id="imagen-sorteo" accept="image/*">
+
+                <button type="submit" class="btn-primary">Agregar Sorteo</button>
+            </form>
+        </div>
+
+        <!-- Contenedor para visualizar sorteos agregados -->
+        <div id="sorteos-agregados" class="sorteos-agregados">
+            <h3 style="text-align: center; margin-top: 20px;">Sorteos Activos</h3>
+            <div class="sorteos-lista">
+                <!-- Los sorteos agregados aparecerán aquí -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal para Editar Sorteo -->
+    <div id="modal-editar-sorteo" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="cerrarModal('modal-editar-sorteo')">&times;</span>
+            <h2>Editar Sorteo</h2>
+            <form id="form-editar-sorteo">
+                <input type="hidden" id="editar-id">
+                <label for="editar-nombre-sorteo">Nombre del Sorteo</label>
+                <input type="text" id="editar-nombre-sorteo" required>
+                
+                <label for="editar-precio-ticket">Precio del Ticket</label>
+                <input type="number" id="editar-precio-ticket" min="1" required>
+                
+                <label for="editar-descripcion-sorteo">Descripción</label>
+                <textarea id="editar-descripcion-sorteo"></textarea>
+                
+                <button type="submit">Guardar Cambios</button>
+            </form>
+            
+            <h3>Participantes</h3>
+            <ul id="participantes-lista">
+                <!-- Aquí se cargarán los participantes desde script.js -->
+            </ul>
+        </div>
+    </div>
+
+    <!-- Modal para Añadir Participante -->
+    <div id="modal-agregar-participante" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="cerrarModal('modal-agregar-participante')">&times;</span>
+            <h2>Añadir Participante</h2>
+            <form id="form-agregar-participante">
+                <input type="hidden" id="participante-sorteo-id">
+                <label for="nombre-participante">Nombre del Participante</label>
+                <input type="text" id="nombre-participante" required>
+                
+                <label for="contacto-participante">Contacto del Participante</label>
+                <input type="text" id="contacto-participante" required>
+                
+                <button type="submit">Añadir</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+

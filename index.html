@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>V RANDOM</title>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">V RANDOM</div>
+        <nav class="navbar">
+            <a href="index.html">Inicio</a>
+            <a href="admin.html">Panel de Administración</a>
+            <a href="historial.html">Historial de Sorteos</a>
+        </nav>
+    </header>
+
+    <!-- Banner Principal -->
+    <section class="banner">
+        <h1>Sorteo Destacado</h1>
+        <p>Participa en nuestro sorteo de la semana y gana increíbles premios.</p>
+        <button onclick="location.href='participar.html'">Participar Ahora</button>
+
+    </section>
+
+    <!-- Lista de Sorteos Activos -->
+<section class="sorteos" id="sorteos">
+    <h2>Sorteos Activos</h2>
+    <div class="sorteos-lista">
+        <!-- Los sorteos activos se mostrarán aquí mediante JavaScript -->
+    </div>
+</section>
+
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2024 Sorteos Web - Todos los derechos reservados</p>
+        <div class="social-icons">
+            <a href="#" class="social-link">Facebook</a>
+            <a href="#" class="social-link">Instagram</a>
+        </div>
+    </footer>
+
+    <!-- Modal de Información de Participación -->
+    <div id="modal-participar" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" onclick="cerrarModal('modal-participar')">&times;</span>
+            <h2>Participa en Nuestros Sorteos</h2>
+            <p>Para participar en nuestros sorteos, selecciona el sorteo de tu preferencia y comunícate con nosotros por WhatsApp.</p>
+            <button onclick="location.href='#sorteos'">Ver Sorteos Activos</button>
+        </div>
+    </div>
+
+    <script>
+        // Oculta los enlaces de administración si el usuario no es administrador
+        if (!localStorage.getItem("isAdmin")) {
+            document.querySelectorAll("a[href='admin.html'], a[href='historial.html']").forEach(link => {
+                link.style.display = "none";
+            });
+        }
+    </script>
+    
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+

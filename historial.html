@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Historial de Sorteos</title>
+</head>
+<body>
+    <script>
+        // Verifica si el usuario es un administrador
+        if (!localStorage.getItem("isAdmin")) {
+            // Si no es administrador, redirígelo a la página de inicio
+            window.location.href = "index.html";
+        }
+    </script>
+    
+    <!-- Header -->
+    <header>
+        <div class="logo">Raffle Now</div>
+        <nav class="navbar">
+            <a href="index.html">Inicio</a>
+            <a href="admin.html">Panel de Administración</a>
+            <a href="historial.html">Historial de Sorteos</a>
+        </nav>
+    </header>
+    
+    <!-- Historial de Sorteos -->
+    <main>
+        <h1>Historial de Sorteos</h1>
+        <section class="historial-container">
+            <div class="historial-lista">
+                <!-- Asegúrate de que este elemento esté presente -->
+                <p id="mensaje-vacio" style="display: none;">No hay sorteos finalizados en el historial.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal para Confirmar Eliminación del Historial -->
+    <div id="modal-confirmar-eliminar" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="cerrarModal('modal-confirmar-eliminar')">&times;</span>
+            <h2>Eliminar Sorteo del Historial</h2>
+            <p>¿Estás seguro de que deseas eliminar este sorteo del historial?</p>
+            <button id="confirmar-eliminar" onclick="confirmarEliminar()">Confirmar</button>
+            <button onclick="cerrarModal('modal-confirmar-eliminar')">Cancelar</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+

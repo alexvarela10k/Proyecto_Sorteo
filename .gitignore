@@ -1,0 +1,33 @@
+# Ignorar archivos de sistema
+.DS_Store      # macOS
+Thumbs.db      # Windows
+desktop.ini    # Windows
+
+# Ignorar archivos de configuración de entorno
+.env
+
+# Ignorar cachés y archivos temporales
+.cache/
+node_modules/  # Si usas Node.js (aunque no parece ser el caso en tu proyecto actual)
+*.log          # Archivos de logs
+
+# Ignorar configuraciones de IDE y editores de código
+.vscode/         # Visual Studio Code
+.idea/           # IntelliJ, WebStorm, PyCharm, etc.
+*.sublime-workspace
+*.sublime-project
+
+# Ignorar archivos de despliegue
+.vercel/       # Carpeta de configuración local de Vercel
+output/        # Salida de archivos de construcción, si se genera alguna
+
+# Ignorar archivos generados por el sistema operativo y navegadores
+*.bak          # Archivos de respaldo
+*.tmp          # Archivos temporales
+*.swp          # Archivos temporales de edición (Vim, etc.)
+
+# Ignorar archivos de imágenes generadas por el navegador
+*.blob         # Archivos temporales de imágenes blob
+
+# Ignorar archivos específicos del proyecto (si no quieres que se suban imágenes de prueba)
+imagenes_de_prueba/

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Login - V RANDOM</title>
+</head>
+<body>
+
+    <!-- Contenedor para centrar el formulario de login -->
+    <div class="login-container">
+        <h2>Iniciar Sesión como Administrador</h2>
+        <form id="login-form">
+            <label for="password">Contraseña de Administrador:</label>
+            <input type="password" id="password" required>
+            <button type="submit">Ingresar</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("login-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const password = document.getElementById("password").value;
+            
+            if (password === "Gabumon2026") { // Cambia "admin123" a la contraseña que prefieras
+                localStorage.setItem("isAdmin", true); // Guarda el estado de administrador en localStorage
+                window.location.href = "admin.html"; // Redirige a la página de administración
+            } else {
+                alert("Contraseña incorrecta");
+            }
+        });
+    </script>
+</body>
+</html>
+
+

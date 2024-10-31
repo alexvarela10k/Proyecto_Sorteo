@@ -1,0 +1,371 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Colores de la paleta */
+:root {
+    --color-fondo-oscuro: #191E29;
+    --color-fondo-medio: #132D46;
+    --color-acento: #01C38E;
+    --color-borde: #6A6E79;
+    --color-blanco: #FFFFFF;
+    --color-texto: #01C38E;
+}
+
+/* Estilos generales */
+body {
+    background-color: var(--color-fondo-oscuro);
+    color: var(--color-blanco);
+}
+
+/* Contenedor centrado y estilizado para el login */
+.login-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 20px;
+    background-color: var(--color-fondo-medio);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: var(--color-fondo-medio);
+}
+
+header .logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--color-acento);
+}
+
+header nav a {
+    color: var(--color-blanco);
+    margin-left: 1rem;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+header nav a:hover {
+    color: var(--color-acento);
+}
+
+/* Banner */
+.banner {
+    text-align: center;
+    padding: 2rem;
+    background: var(--color-fondo-medio);
+    margin-bottom: 1rem;
+}
+
+.banner h1 {
+    font-size: 2rem;
+    color: var(--color-blanco);
+}
+
+.banner p {
+    font-size: 1rem;
+    color: var(--color-blanco);
+}
+
+.banner button {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+    background-color: var(--color-acento);
+    color: var(--color-blanco);
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    margin-top: 1rem;
+}
+
+.banner button:hover {
+    background-color: #00a37a;
+}
+
+/* Sección de Sorteos Activos */
+.sorteos {
+    padding: 2rem;
+    background-color: var(--color-fondo-oscuro);
+    margin-top: 1rem;
+}
+
+.sorteos h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: var(--color-blanco);
+}
+
+.sorteos-lista {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* Estilo de cada tarjeta de sorteo */
+.sorteo-card {
+    background-color: var(--color-fondo-medio);
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    width: 220px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: var(--color-blanco);
+}
+
+.sorteo-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.sorteo-card h3 {
+    font-size: 1.2rem;
+    color: var(--color-acento);
+    margin-bottom: 0.5rem;
+}
+
+.sorteo-card p {
+    font-size: 0.9rem;
+    color: var(--color-blanco);
+    margin-bottom: 1rem;
+}
+
+/* Botones dentro de las tarjetas */
+.sorteo-card button,
+.btn-whatsapp {
+    display: block;
+    width: 100%;
+    padding: 0.5rem;
+    margin: 5px 0;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: var(--color-blanco);
+    background-color: var(--color-acento);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.sorteo-card button:hover,
+.btn-whatsapp:hover {
+    background-color: #00a37a;
+}
+
+.btn-whatsapp {
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 0.5rem;
+    text-align: center;
+}
+
+/* Panel de administración centrado */
+.admin-panel-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: var(--color-fondo-medio);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.admin-panel-container h2 {
+    text-align: center;
+    color: var(--color-blanco);
+    margin-bottom: 1rem;
+}
+
+.admin-panel-container form input,
+.admin-panel-container form textarea,
+.admin-panel-container form button {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid var(--color-borde);
+    border-radius: 5px;
+}
+
+/* Historial de sorteos */
+.historial-lista {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.historial-card {
+    background-color: var(--color-fondo-medio);
+    border-radius: 8px;
+    padding: 15px;
+    width: 250px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.historial-card h3 {
+    color: var(--color-acento);
+    margin-bottom: 0.5rem;
+}
+
+.historial-card p {
+    color: var(--color-blanco);
+    margin-bottom: 0.5rem;
+}
+
+.historial-card button {
+    background-color: var(--color-acento);
+    color: var(--color-blanco);
+    border: none;
+    padding: 0.5rem;
+    border-radius: 5px;
+    width: 100%;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.historial-card button:hover {
+    background-color: #00a37a;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: var(--color-fondo-medio);
+    color: var(--color-blanco);
+}
+
+.social-icons a {
+    color: var(--color-blanco);
+    margin: 0 0.5rem;
+    text-decoration: none;
+}
+
+.social-icons a:hover {
+    color: var(--color-acento);
+}
+
+/* Contenedor para el formulario de agregar sorteo */
+.admin-form-container {
+    max-width: 500px;
+    margin: 0 auto;
+    background-color: var(--color-fondo-medio);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+}
+
+.admin-form-container h2 {
+    text-align: center;
+    color: var(--color-blanco);
+    margin-bottom: 15px;
+}
+
+/* Estilos para el formulario en el panel de administración */
+.admin-form-container form label {
+    color: var(--color-blanco);
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.admin-form-container form input,
+.admin-form-container form textarea,
+.admin-form-container form button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    border: 1px solid var(--color-borde);
+    border-radius: 5px;
+}
+
+.admin-form-container form input::placeholder,
+.admin-form-container form textarea::placeholder {
+    color: #aaa;
+}
+
+.admin-form-container form button {
+    background-color: var(--color-acento);
+    color: var(--color-blanco);
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 15px;
+}
+
+.admin-form-container form button:hover {
+    background-color: #00a37a;
+}
+
+
+/* Modales */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    background-color: var(--color-blanco);
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid var(--color-borde);
+    width: 80%;
+    max-width: 500px;
+    border-radius: 8px;
+    color: var(--color-fondo-oscuro);
+}
+
+.close {
+    color: var(--color-borde);
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #000;
+}
+
+/* Estilos Responsivos */
+@media (max-width: 768px) {
+    header, footer {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .sorteos-lista,
+    .historial-lista {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .banner h1 {
+        font-size: 1.5rem;
+    }
+}
+
+
